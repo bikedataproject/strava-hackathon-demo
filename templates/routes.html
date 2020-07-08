@@ -3,13 +3,12 @@
 <div class="card">
   <div class="card-header bg-primary">
     <div class="card-title text-center">
-      <h2>{{activity.name}}</h2>
+      <h2>Activity name: {{activity.name}}</h2>
     </div>
   </div>
   <div class="card-body text-center" style="width: 20%;">
     <p>Started at {{activity.start_date}}</p>
     <p>Activity took {{activity.elapsed_time}} seconds</p>
-    <p>Coordinates: {{activity.map.summary_polyline}}</p>
   </div>
 </div>
 {%endfor%}
