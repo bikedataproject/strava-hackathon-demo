@@ -1,0 +1,32 @@
+{%extends "base.html"%} {%block Body%}
+<h1>Enter Strava app details</h1>
+<p>
+  The information required below can be found
+  <a href="https://www.strava.com/settings/api" target="_blank">here</a>
+</p>
+<form action="/set/client/data" method="POST" enctype="multipart/form-data">
+  <div class="form-group">
+    <label class="form-label" for="clientid">Client ID</label>
+    <input
+      class="form-input"
+      type="text"
+      name="clientid"
+      id="clientid"
+      placeholder="1234"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="clientsecret">Client Secret</label>
+    <input
+      class="form-input"
+      type="text"
+      name="clientsecret"
+      id="clientsecret"
+      placeholder="secret123"
+      required
+    />
+  </div>
+  <button class="btn btn-success">Get started</button>
+</form>
+{%endblock%}

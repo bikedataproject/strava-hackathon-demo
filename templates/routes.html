@@ -1,0 +1,78 @@
+{%extends "base.html"%} {%block Body%}
+<a href="/reset" class="btn btn-error">Log out</a>
+<div style="display: inline;">
+  <div id="map" style="width:100%;height:65vh"></div>
+  <script>
+    {
+      let data = Object({{ data| tojson
+    }});
+
+    const getRandomColor = () => {
+      var letters = '0123456789ABCDEF';
+      var color = '#';
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    mapboxgl.accessToken = "{{ mapboxtoken }}";
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/dark-v10',
+      center: [4.380068778991699, 50.85095984723529],
+      zoom: 8
+    });
+    map.on('load', () => {
+      let i = 0;
+      data.forEach(element => {
+        i += 1;
+        element.color_segment = getRandomColor();
+        map.addSource(`route${i}`, {
+          'type': 'geojson',
+          'data': {
+            'type': 'Feature',
+            'properties': {},
+            'geometry': {
+              'type': 'LineString',
+              'coordinates': element.trajectories
+            }
+          }
+        });
+        map.addLayer({
+          'id': `route${i}`,
+          'type': 'line',
+          'source': `route${i}`,
+          'layout': {
+            'line-join': 'round',
+            'line-cap': 'round'
+          },
+          'paint': {
+            'line-color': element.color_segment,
+            'line-width': 2
+          }
+        });
+
+        document.getElementById(`${element.name}${element.start_date}`).innerHTML += `<div style='width:100px;height:30px;background-color:${element.color_segment}'></div>`;
+      });
+    });
+}
+  </script>
+</div>
+{%for activity in data%}
+<div class="card">
+  <div class="card-header bg-primary">
+    <div class="card-title text-center">
+      <h2>Activity name: {{activity.name}}</h2>
+    </div>
+  </div>
+  <div class="card-body">
+    <p>Started at {{activity.start_date}}</p>
+    <p>Activity took {{activity.elapsed_time}} seconds</p>
+    <p>Distance traveled {{ activity.distance / 1000.0 }} km</p>
+    <p id="{{ activity.name }}{{ activity.start_date }}">Color: </p>
+  </div>
+</div>
+{%endfor%}
+
+{%endblock%}
