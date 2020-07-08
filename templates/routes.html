@@ -10,12 +10,12 @@
     <div id="map" style="width:1280px;height:720px"></div>
     <script>
       let tmp = Object({{ activity| tojson}});
-      mapboxgl.accessToken = 'pk.eyJ1IjoicmljaGV6YSIsImEiOiJja2NkNmpvbDAwYnJ4MnltYzhkcmc5eTlhIn0.w52klxjRcTEEzZlNZMaGiQ';
+      mapboxgl.accessToken = '<insert-token>';
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [4.380068778991699, 50.85095984723529],
-        zoom: 14
+        zoom: 8
       });
       map.on('load', () => {
         map.addSource('route', {
