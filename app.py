@@ -54,6 +54,13 @@ def show_routes():
         return render_template('routes.html', data=data)
     return redirect('/')
 
+@app.route('/reset')
+def reset_session():
+    for key in ['bearertoken', 'clientid', 'clientsecret']:
+        if key in session:
+            del session[key]
+    return redirect('/')
+
 
 if __name__ == '__main__':
     app.run(port=5000, host='0.0.0.0', debug=True)
