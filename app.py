@@ -10,7 +10,7 @@ app.secret_key = urandom(80)
 
 @app.route('/')
 def home():
-    return redirect(f'https://www.strava.com/oauth/authorize?client_id={environ["clientid"]}&response_type=code&redirect_uri=http://localhost:5000/get/bearer&approval_prompt=force&scope=activity:read_all')
+    return redirect(f'https://www.strava.com/oauth/authorize?client_id={environ["clientid"]}&response_type=code&redirect_uri={environ["endpoint"]}/get/bearer&approval_prompt=force&scope=activity:read_all')
 
 @app.route('/get/bearer')
 def get_bearer():
