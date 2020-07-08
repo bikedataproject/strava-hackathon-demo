@@ -48,7 +48,7 @@ def show_routes():
         )
         data = json.loads(response.text)
         for d in data:
-            d['map']['summary_polyline'] = polyline.decode(
+            d['map']['summary_polyline_array'] = polyline.decode(
                 d['map']['summary_polyline'], geojson=True)
         print(session['bearertoken'])
         return render_template('routes.html', data=data)
