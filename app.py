@@ -38,11 +38,10 @@ def show_routes():
         )
         data = json.loads(response.text)
         logging.info(data)
-        trajectories = []
         for d in data:
             if d['map']['summary_polyline'] is not None:
-                trajectories.append(polyline.decode(d['map']['summary_polyline'], geojson=True))
-        return render_template('routes.html', data=data, mapboxtoken=environ['mapboxtoken'], trajectories=trajectories)
+                d['trajectories'] = polyline.decode(d['map']['summary_polyline'], geojson=True) 
+        return render_template('routes.html', data=data, mapboxtoken=environ['mapboxtoken'])
     return redirect('/')
 
 @app.route('/reset')
