@@ -7,9 +7,10 @@
       <h2>Activity name: {{activity.name}}</h2>
     </div>
   </div>
-  <div class="card-body text-center" style="width: 20%;">
+  <div class="card-body text-center">
     <p>Started at {{activity.start_date}}</p>
     <p>Activity took {{activity.elapsed_time}} seconds</p>
+    <p>Distance travelled: {{activity.distance / 1000.0}}km</p>
   </div>
 </div>
 {%endfor%}
