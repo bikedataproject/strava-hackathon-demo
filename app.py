@@ -3,6 +3,9 @@ from os import urandom, environ
 import requests
 import json
 import polyline
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 app.secret_key = urandom(80)
@@ -34,6 +37,7 @@ def show_routes():
             "GET", "https://www.strava.com/api/v3/athlete/activities", headers={'Authorization': f'Bearer {session["bearertoken"]}'}
         )
         data = json.loads(response.text)
+        logging.info(data)
         trajectories = []
         for d in data:
             trajectories.append(polyline.decode(
