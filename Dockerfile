@@ -9,6 +9,8 @@ RUN apk update && \
 # Get files, drop Dockerfile
 COPY . .
 
+RUN ls
+
 # Install python packages
 RUN pip3 install -r requirements.txt
 
