@@ -1,23 +1,5 @@
 {%extends "base.html"%} {%block Body%}
 <a href="/reset" class="btn btn-error">Log out</a>
-<<<<<<< HEAD
-=======
-{%for activity in data%}
-<div class="card">
-  <div class="card-header bg-primary">
-    <div class="card-title text-center">
-      <h2>Activity name: {{activity.name}}</h2>
-    </div>
-  </div>
-  <div class="card-body text-center">
-    <p>Started at {{activity.start_date}}</p>
-    <p>Activity took {{activity.elapsed_time}} seconds</p>
-    <p>Distance travelled: {{activity.distance / 1000.0}}km</p>
-  </div>
-</div>
-{%endfor%}
-
->>>>>>> aa7d9a3dfcec000831cf015bad31f4c5f26be943
 <div style="display: inline;">
   <div id="map" style="width:80vw;height:50vh"></div>
   <script>
