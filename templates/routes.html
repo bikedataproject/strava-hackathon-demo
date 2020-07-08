@@ -9,7 +9,8 @@
   <div style="display: inline;">
     <div id="map" style="width:1280px;height:720px"></div>
     <script>
-      mapboxgl.accessToken = '<insert-token>';
+      let tmp = Object({{ activity| tojson}});
+      mapboxgl.accessToken = 'pk.eyJ1IjoicmljaGV6YSIsImEiOiJja2NkNmpvbDAwYnJ4MnltYzhkcmc5eTlhIn0.w52klxjRcTEEzZlNZMaGiQ';
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
@@ -24,11 +25,11 @@
             'properties': {},
             'geometry': {
               'type': 'LineString',
-              'coordinates': {{activity.summary_polyline|tostring}};
+              'coordinates': tmp.map.summary_polyline_array
             }
           }
         });
-        
+
         map.addLayer({
           'id': 'route',
           'type': 'line',
@@ -38,8 +39,8 @@
             'line-cap': 'round'
           },
           'paint': {
-            'line-color': '#888',
-            'line-width': 8
+            'line-color': '#ff0000',
+            'line-width': 2
           }
         });
       });

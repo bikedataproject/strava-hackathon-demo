@@ -21,7 +21,7 @@ def set_client_id():
         if 'clientid' in request.form and 'clientsecret' in request.form:
             session['clientid'] = request.form['clientid']
             session['clientsecret'] = request.form['clientsecret']
-            return redirect(f'https://www.strava.com/oauth/authorize?client_id={session["clientid"]}&response_type=code&redirect_uri=http://pickleplexbootcamp.ddns.net:5000/get/bearer&approval_prompt=force&scope=activity:read_all')
+            return redirect(f'https://www.strava.com/oauth/authorize?client_id={session["clientid"]}&response_type=code&redirect_uri=http://localhost:5000/get/bearer&approval_prompt=force&scope=activity:read_all')
     return redirect('/')
 
 
