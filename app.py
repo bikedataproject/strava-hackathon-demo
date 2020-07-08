@@ -34,11 +34,11 @@ def show_routes():
             "GET", "https://www.strava.com/api/v3/athlete/activities", headers={'Authorization': f'Bearer {session["bearertoken"]}'}
         )
         data = json.loads(response.text)
+        trajectories = []
         for d in data:
-            d['map']['summary_polyline_array'] = polyline.decode(
-                d['map']['summary_polyline'], geojson=True)
-        print(session['bearertoken'])
-        return render_template('routes.html', data=data, mapboxtoken=environ['mapboxtoken'])
+            trajectories.append(polyline.decode(
+                d['map']['summary_polyline'], geojson=True))
+        return render_template('routes.html', data=data, mapboxtoken=environ['mapboxtoken'], trajectories=trajectories)
     return redirect('/')
 
 @app.route('/reset')

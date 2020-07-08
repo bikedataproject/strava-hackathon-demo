@@ -6,34 +6,44 @@
       <h2>{{activity.name}}</h2>
     </div>
   </div>
-  <div style="display: inline;">
-    <div id="map" style="width:1280px;height:720px"></div>
-    <script>
-      let tmp = Object({{ activity| tojson }});
-      mapboxgl.accessToken = "{{ mapboxtoken }}";
-      var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [4.380068778991699, 50.85095984723529],
-        zoom: 8
-      });
-      map.on('load', () => {
-        map.addSource('route', {
+  <div class="card-body text-center" style="width: 20%;">
+    <p>Started at {{activity.start_date}}</p>
+    <p>Activity took {{activity.elapsed_time}} seconds</p>
+    <p>Coordinates: {{activity.map.summary_polyline}}</p>
+  </div>
+</div>
+{%endfor%}
+
+<div style="display: inline;">
+  <div id="map" style="width:1280px;height:720px"></div>
+  <script>
+    let trajetories = {{ trajectories| tojson }};
+    mapboxgl.accessToken = "{{ mapboxtoken }}";
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [4.380068778991699, 50.85095984723529],
+      zoom: 8
+    });
+    map.on('load', () => {
+      let i = 0;
+      trajectories.forEach(element => {
+        i += 1;
+        map.addSource(`route${i}`, {
           'type': 'geojson',
           'data': {
             'type': 'Feature',
             'properties': {},
             'geometry': {
               'type': 'LineString',
-              'coordinates': tmp.map.summary_polyline_array
+              'coordinates': element
             }
           }
         });
-
         map.addLayer({
-          'id': 'route',
+          'id': `route${i}`,
           'type': 'line',
-          'source': 'route',
+          'source': `route${i}`,
           'layout': {
             'line-join': 'round',
             'line-cap': 'round'
@@ -44,13 +54,8 @@
           }
         });
       });
-    </script>
-    <div class="card-body text-center" style="width: 20%;">
-      <p>Started at {{activity.start_date}}</p>
-      <p>Activity took {{activity.elapsed_time}} seconds</p>
-      <p>Coordinates: {{activity.map.summary_polyline}}</p>
-    </div>
-  </div>
-</div>
 
-{%endfor%} {%endblock%}
+    });
+  </script>
+</div>
+{%endblock%}
